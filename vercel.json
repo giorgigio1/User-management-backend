@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "builds": [{ "src": "src/**/*", "use": "@vercel/node-server" }],
+  "builds": [{ "src": "src/**/*", "use": "@vercel/node" }],
   "routes": [
     { "src": "/auth/(.*)", "dest": "src/routes/auth/$1" },
     { "src": "/user/(.*)", "dest": "src/routes/user/$1" },
