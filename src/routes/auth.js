@@ -1,8 +1,12 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const { createHash } = require('crypto');
 const router = express.Router();
+
+function hash(input) {
+  return createHash('sha256').update(input).digest('hex');
+}
 
 async function login(user) {
   user.lastLogin = new Date();
@@ -31,7 +35,7 @@ router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = hash(password);
 
     const newUser = new User({
       username,
@@ -63,7 +67,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = user.password === hash(password);
 
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid credentials" });
