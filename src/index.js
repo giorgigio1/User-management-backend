@@ -4,9 +4,9 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const authRoutes = require("./src/routes/auth");
-const userRoutes = require("./src/routes/user");
-const authMiddleware = require("./src/middleware/auth");
+const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
+const authMiddleware = require("./middleware/auth");
 
 app.use(express.json());
 app.use(cors({ origin: "*" }));
