@@ -29,3 +29,5 @@ app.listen(PORT, () => {
 
 app.use("/auth", authRoutes);
 app.use("/user", authMiddleware, userRoutes);
+
+module.exports = app;
