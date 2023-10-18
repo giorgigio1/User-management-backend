@@ -9,7 +9,7 @@ const userRoutes = require("./routes/user");
 const authMiddleware = require("./middleware/auth");
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 mongoose
   .connect("mongodb+srv://giorgi:giorgi@cluster0.p2orfkr.mongodb.net/test", {
