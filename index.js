@@ -31,4 +31,4 @@ app.use("/", "<div> hello world </div>");
 app.use("/auth", authRoutes);
 app.use("/user", authMiddleware, userRoutes);
 
-
+export default app;
