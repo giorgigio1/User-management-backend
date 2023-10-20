@@ -1,11 +1,11 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const { createHash } = require('crypto');
+const { createHash } = require("crypto");
 const router = express.Router();
 
 function hash(input) {
-  return createHash('sha256').update(input).digest('hex');
+  return createHash("sha256").update(input).digest("hex");
 }
 
 async function login(user) {
@@ -15,7 +15,7 @@ async function login(user) {
     {
       userId: user._id,
       email: user.email,
-      name: user.username,
+      name: user.fullname,
       status: user.status,
     },
     "your_secret_key",
@@ -32,13 +32,13 @@ async function login(user) {
 }
 
 router.post("/register", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { fullname, email, password } = req.body;
 
   try {
     const hashedPassword = hash(password);
 
     const newUser = new User({
-      username,
+      fullname,
       email,
       password: hashedPassword,
       status: "active",
@@ -52,8 +52,13 @@ router.post("/register", async (req, res) => {
       userId: result.userId,
     });
   } catch (error) {
-    console.error("User registration error:", error);
-    res.status(500).json({ message: "Registration failed" });
+    console.log("Error caught:", error);
+
+    if (error.code === 11000 && error.keyPattern.email === 1) {
+      res.status(400).json({ message: "Email is already registered" });
+    } else {
+      res.status(500).json({ message: "Registration failed" });
+    }
   }
 });
 
