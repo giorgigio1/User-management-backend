@@ -30,6 +30,6 @@ app.listen(PORT, () => {
 app.use("/auth", authRoutes);
 app.use("/user", authMiddleware, userRoutes);
 
-app.get("/", (req, res) => {
+app.get("/greet", (req, res) => {
   res.send("Hello World!");
 })
