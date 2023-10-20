@@ -8,6 +8,10 @@
   ],
   "routes": [
     {
+      "src": "/greet",
+      "dest": "/src/index.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/"
     }
